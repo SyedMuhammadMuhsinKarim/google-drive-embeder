@@ -1,0 +1,22 @@
+.my-player {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.middle {
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
+
+.my-div {
+  padding: 10px;
+}
+
+/* .my-div-two {
+  padding: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+} */
