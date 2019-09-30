@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import axios from "axios";
 import Form from "./Components/Form";
 import "./styles.css";
-import { Link } from "react-router-dom";
-import image from "./Components/Form/719.gif";
 
 const GAPI = `https://www.googleapis.com/drive/v2/files/`;
 const KEY = `AIzaSyCP2-urwiL1AUDbv0_KHHSv_JKfJXdrKXk`;
@@ -21,7 +19,7 @@ class Drive extends Component {
   }
 
   onSubmit = event => {
-    this.setState({ loading: true });
+    this.setState({ loading: true, error: null });
     this.getIdentity();
 
     event.preventDefault();
@@ -33,14 +31,12 @@ class Drive extends Component {
 
     if (link.split("=")[0] === "https://drive.google.com/open?id") {
       identity = link.split("=")[1];
-      // this.setState({ id: identity });
       this.fetchingAPI(identity);
-      // this.fetchingLink(identity);
+      console.log("ID", identity);
     } else if (link.split("/")[3] === "file") {
       identity = link.split("/")[5];
-      // this.setState({ id: identity });
       this.fetchingAPI(identity);
-      // this.fetchingLink(identity);
+      console.log("ID", identity);
     } else {
       alert("Error");
     }
@@ -58,15 +54,15 @@ class Drive extends Component {
     return hours + " Hr " + minutes + " Min " + seconds + " Sec";
   }
 
-  async fetchingAPI(link) {
-    await axios(`${GAPI}${link}?key=${KEY}`)
+  fetchingAPI(link) {
+    axios(`${GAPI}${link}?key=${KEY}`)
       .then(async result => {
         let fileSize = undefined;
 
         if (result.data.fileSize > 1000000000) {
-          fileSize = `${result.data.fileSize / 1000000000} GB`;
+          fileSize = `${(await result.data.fileSize) / 1000000000} GB`;
         } else {
-          fileSize = `${result.data.fileSize / 1000000} MB`;
+          fileSize = `${(await result.data.fileSize) / 1000000} MB`;
         }
 
         if (fileSize !== undefined) {
@@ -78,33 +74,30 @@ class Drive extends Component {
               g_down: `${GAPI}${link}?key=${KEY}&alt=media`,
               title: result.data.title.slice(0, -4),
               size: `${fileSize}`,
-              // quality: `${result.data.videoMediaMetadata.height}p`,
-              format: result.data.title.slice(-3)
-              // duration: this.msToTime(
-              //   result.data.videoMediaMetadata.durationMillis
-              // )
+              format: result.data.mimeType
             }
           });
         }
       })
-      .then(() => this.sendInfo())
-      .then(() => this.setState({ loading: false }))
-      .catch(error => {
-        this.setState({ loading: false });
+      .then(() => console.log(this.state.post)) // Dev
+      .then(() => this.sendInfo(this.state.post))
+      .catch(err => {
+        this.setState({ error: err, loading: false });
       });
   }
 
-  async sendInfo() {
-    await axios
-      .post("https://api-gd.herokuapp.com", this.state.post)
-      .then(response => {
-        if (response.data.g_id) {
-          this.setState({ host: response.data._id });
-          console.log("res", response);
+  sendInfo(post) {
+    axios
+      .post("https://api-gd.herokuapp.com", post)
+      .then(async res => {
+        if (await res.data.g_id) {
+          await this.setState({ host: res.data._id });
+          console.log("res", res);
         }
       })
-      .catch(function(error) {
-        console.error(error);
+      .then(() => this.setState({ loading: false }))
+      .catch(async error => {
+        await this.setState({ error: error.res });
       });
   }
 
@@ -117,7 +110,6 @@ class Drive extends Component {
   render() {
     const { link, error, loading, host } = this.state;
     const isInvalid = link === "";
-    console.log(host);
     return (
       <>
         <Form

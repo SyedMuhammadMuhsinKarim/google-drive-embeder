@@ -26,9 +26,17 @@ const Form = ({ onChange, onSubmit, host, link, disabled, error, loading }) => (
         </button>
       </div>
       <br />
-      {loading ? <img alt="Loading" src={image} /> : <></>}
-      {host && <Link to={"/" + host}>Your Link</Link>}
-      {error && <p>{error.message}</p>}
+      {loading ? (
+        <img className="text-center" alt="Loading" src={image} />
+      ) : (
+        <></>
+      )}
+      {host && (
+        <Link className="text-center" to={"/" + host}>
+          Your Link
+        </Link>
+      )}
+      {error && <code className="text-center">{error.message}</code>}
     </form>
     {!host && !loading && (
       <>
