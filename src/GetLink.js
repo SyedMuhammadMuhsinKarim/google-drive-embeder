@@ -2,12 +2,15 @@ import React, { Component } from "react";
 import axios from "axios";
 import Form from "./Components/Form";
 import "./styles.css";
+import Swal from "sweetalert2";
+import "dotenv/config";
 
-const GAPI = `https://www.googleapis.com/drive/v2/files/`;
-const KEY = `AIzaSyCP2-urwiL1AUDbv0_KHHSv_JKfJXdrKXk`;
+const GAPI = process.env.GD_API;
+const KEY = process.env.KEY;
+const DEV_SERVER = process.env.API;
+
 const INITIAL_STATE = {
   link: "",
-  error: null,
   post: undefined,
   result: undefined
 };
@@ -19,9 +22,9 @@ class Drive extends Component {
   }
 
   onSubmit = event => {
-    this.setState({ loading: true, error: null });
+    this.setState({ loading: true });
     this.getIdentity();
-
+    this.setState({ host: undefined });
     event.preventDefault();
   };
 
@@ -32,13 +35,16 @@ class Drive extends Component {
     if (link.split("=")[0] === "https://drive.google.com/open?id") {
       identity = link.split("=")[1];
       this.fetchingAPI(identity);
-      console.log("ID", identity);
+      // console.log("ID OPEN", identity);
     } else if (link.split("/")[3] === "file") {
       identity = link.split("/")[5];
       this.fetchingAPI(identity);
-      console.log("ID", identity);
+      // console.log("ID VIEW", identity);
     } else {
-      alert("Error");
+      Swal.fire("Something Wrong", "Your Link Format is Improper", "error");
+      this.setState({
+        loading: false
+      });
     }
   };
 
@@ -54,19 +60,20 @@ class Drive extends Component {
     return hours + " Hr " + minutes + " Min " + seconds + " Sec";
   }
 
-  fetchingAPI(link) {
-    axios(`${GAPI}${link}?key=${KEY}`)
-      .then(async result => {
+  async fetchingAPI(link) {
+    await axios(`${GAPI}${link}?key=${KEY}`)
+      .then(result => {
         let fileSize = undefined;
+        // console.info(result);
 
         if (result.data.fileSize > 1000000000) {
-          fileSize = `${(await result.data.fileSize) / 1000000000} GB`;
+          fileSize = `${result.data.fileSize / 1000000000} GB`;
         } else {
-          fileSize = `${(await result.data.fileSize) / 1000000} MB`;
+          fileSize = `${result.data.fileSize / 1000000} MB`;
         }
 
         if (fileSize !== undefined) {
-          await this.setState({
+          this.setState({
             result: result.data,
             loading: true,
             post: {
@@ -79,25 +86,25 @@ class Drive extends Component {
           });
         }
       })
-      .then(() => console.log(this.state.post)) // Dev
-      .then(() => this.sendInfo(this.state.post))
-      .catch(err => {
-        this.setState({ error: err, loading: false });
+      // .then(() => console.info(this.state.post))
+      .then(() => this.sendInfo())
+      .catch(error => {
+        Swal.fire("Something Wrong", error, "error");
+        this.setState({ loading: false });
       });
   }
 
-  sendInfo(post) {
+  sendInfo() {
     axios
-      .post("https://api-gd.herokuapp.com", post)
-      .then(async res => {
-        if (await res.data.g_id) {
-          await this.setState({ host: res.data._id });
-          console.log("res", res);
-        }
+      .post(`${DEV_SERVER}`, this.state.post)
+      .then(res => {
+        this.setState({ host: res.data._id });
+        Swal.fire("Something Wrong", error.response.data, "error");
       })
       .then(() => this.setState({ loading: false }))
-      .catch(async error => {
-        await this.setState({ error: error.res });
+      .catch(error => {
+        Swal.fire("Something Wrong", error.response.data, "error");
+        this.setState({ loading: false });
       });
   }
 
@@ -108,7 +115,7 @@ class Drive extends Component {
   };
 
   render() {
-    const { link, error, loading, host } = this.state;
+    const { link, loading, host } = this.state;
     const isInvalid = link === "";
     return (
       <>
@@ -117,7 +124,6 @@ class Drive extends Component {
           onChange={this.onChange}
           onSubmit={this.onSubmit}
           disabled={isInvalid}
-          error={error}
           loading={loading}
           host={host}
         />

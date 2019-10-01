@@ -21,7 +21,7 @@ export default class Video extends Component {
     return (
       <React.Fragment>
         <Helmet>
-          <title>{this.props.title ? this.props.title : "Error"}</title>
+          <title>{this.props.title ? this.props.title : "Demo"}</title>
         </Helmet>
         <div className="my-div shadow middle container">
           <div className="embed-responsive-16by9">
