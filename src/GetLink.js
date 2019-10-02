@@ -3,11 +3,10 @@ import axios from "axios";
 import Form from "./Components/Form";
 import "./styles.css";
 import Swal from "sweetalert2";
-import "dotenv/config";
 
-const GAPI = process.env.GD_API;
-const KEY = process.env.KEY;
-const DEV_SERVER = process.env.API;
+const KEY='AIzaSyCP2-urwiL1AUDbv0_KHHSv_JKfJXdrKXk';
+const DEV_SERVER ="https://api-gd.herokuapp.com";
+const GAPI = "https://www.googleapis.com/drive/v2/files/";
 
 const INITIAL_STATE = {
   link: "",
