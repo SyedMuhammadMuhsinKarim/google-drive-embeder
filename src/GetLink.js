@@ -99,7 +99,6 @@ class Drive extends Component {
       .post(`${DEV_SERVER}`, this.state.post)
       .then(res => {
         this.setState({ host: res.data._id });
-        Swal.fire("Something Wrong", error.response.data, "error");
       })
       .then(() => this.setState({ loading: false }))
       .catch(error => {
