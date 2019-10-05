@@ -30,9 +30,7 @@ class Drive extends Component {
         this.setState({ my_res: response.data, loading: false });
         console.log(response.data);
       })
-      .catch(error => {
-        axios(`${GAPI}${link}?key=${KEY}`);
-      });
+      .catch(error => {});
   }
 
   render() {
