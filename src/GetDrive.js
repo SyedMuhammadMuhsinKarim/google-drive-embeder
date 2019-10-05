@@ -6,9 +6,9 @@ import image from "./Components/Form/719.gif";
 import dotenv from 'dotenv';
 dotenv.config();
 
-const KEY = process.env.KEY;
-const DEV_SERVER = process.env.DEV_SERVER;
-const GAPI = process.env.GOOGLE_API;
+const KEY = process.env.REACT_APP_KEY;
+const DEV_SERVER = process.env.REACT_APP_DEV_SERVER;
+const GAPI = process.env.REACT_APP_GOOGLE_API;
 
 class Drive extends Component {
   constructor() {
