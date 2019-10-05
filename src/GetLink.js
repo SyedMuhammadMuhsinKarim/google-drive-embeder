@@ -3,6 +3,7 @@ import axios from "axios";
 import Form from "./Components/Form";
 import "./styles.css";
 import Swal from "sweetalert2";
+import ('dotenv/config');
 
 const KEY = process.env.KEY;
 const DEV_SERVER = process.env.DEV_SERVER;

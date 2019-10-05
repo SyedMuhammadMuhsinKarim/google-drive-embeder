@@ -3,6 +3,7 @@ import axios from "axios";
 import "./styles.css";
 import Video from "./Components/Video";
 import image from "./Components/Form/719.gif";
+import 'dotenv/config';
 
 const KEY = process.env.KEY;
 const DEV_SERVER = process.env.DEV_SERVER;
