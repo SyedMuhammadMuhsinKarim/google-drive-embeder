@@ -4,9 +4,9 @@ import Form from "./Components/Form";
 import "./styles.css";
 import Swal from "sweetalert2";
 
-const KEY='AIzaSyCP2-urwiL1AUDbv0_KHHSv_JKfJXdrKXk';
-const DEV_SERVER ="https://api-gd.herokuapp.com";
-const GAPI = "https://www.googleapis.com/drive/v2/files/";
+const KEY = process.env.KEY;
+const DEV_SERVER = process.env.DEV_SERVER;
+const GAPI = process.env.GOOGLE_API;
 
 const INITIAL_STATE = {
   link: "",
@@ -95,7 +95,7 @@ class Drive extends Component {
 
   sendInfo() {
     axios
-      .post(`${DEV_SERVER}`, this.state.post)
+      .post(`${DEV_SERVER}/link`, this.state.post)
       .then(res => {
         this.setState({ host: res.data._id });
       })

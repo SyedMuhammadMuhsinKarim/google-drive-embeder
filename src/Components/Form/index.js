@@ -36,7 +36,6 @@ const Form = ({ onChange, onSubmit, host, link, disabled, error, loading }) => (
           Your Link
         </Link>
       )}
-      {error && <code className="text-center">{error.message}</code>}
     </form>
     {!host && !loading && (
       <>

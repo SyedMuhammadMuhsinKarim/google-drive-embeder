@@ -4,6 +4,10 @@ import "./styles.css";
 import Video from "./Components/Video";
 import image from "./Components/Form/719.gif";
 
+const KEY = process.env.KEY;
+const DEV_SERVER = process.env.DEV_SERVER;
+const GAPI = process.env.GOOGLE_API;
+
 class Drive extends Component {
   constructor() {
     super();
@@ -19,15 +23,15 @@ class Drive extends Component {
     this.fetchingData();
   }
 
-  async fetchingData() {
-    await axios
-      .get(`https://api-gd.herokuapp.com/${this.state.id}`)
+  fetchingData() {
+    axios
+      .get(`${DEV_SERVER}/link/${this.state.id}`)
       .then(response => {
         this.setState({ my_res: response.data, loading: false });
         console.log(response.data);
       })
-      .catch(function(error) {
-        console.error("Error", error);
+      .catch(error => {
+        axios(`${GAPI}${link}?key=${KEY}`);
       });
   }
 
