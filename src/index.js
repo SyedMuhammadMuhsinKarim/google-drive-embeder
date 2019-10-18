@@ -1,8 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-// import "./styles.scss";
 import App from "./App";
+import serverApiContext from "./Api/context";
+import AuthApi from "./Api";
 
 const rootElement = document.getElementById("root");
-ReactDOM.render(<App />, rootElement);
+ReactDOM.render(
+  <serverApiContext.Provider value={new AuthApi()}>
+    <App />
+  </serverApiContext.Provider>,
+  rootElement
+);

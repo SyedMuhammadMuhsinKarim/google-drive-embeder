@@ -3,12 +3,13 @@ import axios from "axios";
 import "./styles.css";
 import Video from "./Components/Video";
 import image from "./Components/Form/719.gif";
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
+// import Swal from "sweetalert2";
 dotenv.config();
 
-const KEY = process.env.REACT_APP_KEY;
+// const KEY = process.env.REACT_APP_KEY;
 const DEV_SERVER = process.env.REACT_APP_DEV_SERVER;
-const GAPI = process.env.REACT_APP_GOOGLE_API;
+// const GAPI = process.env.REACT_APP_GOOGLE_API;
 
 class Drive extends Component {
   constructor() {
@@ -18,7 +19,7 @@ class Drive extends Component {
 
   UNSAFE_componentWillMount() {
     const path = window.location.pathname.split("/");
-    this.setState({ id: path[1] });
+    this.setState({ id: path[2] });
   }
 
   componentDidMount() {
@@ -30,9 +31,12 @@ class Drive extends Component {
       .get(`${DEV_SERVER}/link/${this.state.id}`)
       .then(response => {
         this.setState({ my_res: response.data, loading: false });
-        console.log(response.data);
+        console.log("res", response);
       })
-      .catch(error => {});
+      .catch(error => {
+        // Swal.fire("", error.response.data, "wrong");
+        this.setState({ loading: false });
+      });
   }
 
   render() {

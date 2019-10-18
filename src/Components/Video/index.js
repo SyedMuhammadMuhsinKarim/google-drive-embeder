@@ -23,7 +23,8 @@ export default class Video extends Component {
         <Helmet>
           <title>{this.props.title ? this.props.title : "Demo"}</title>
         </Helmet>
-        <div className="my-div shadow middle container">
+
+        <div className="my-div shadow container">
           <div className="embed-responsive-16by9">
             <video
               id="plyr-player"

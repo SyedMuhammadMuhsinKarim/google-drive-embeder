@@ -7,7 +7,7 @@ export default function Footer() {
       id="sticky-footer mt-auto"
       className="fixed-bottom py-2 bg-white text-dark"
     >
-      <div className="container text-center">
+      <div className="text-center">
         <small>Made with Love</small>
       </div>
     </footer>
