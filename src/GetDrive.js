@@ -1,15 +1,10 @@
 import React, { Component } from "react";
-import axios from "axios";
 import "./styles.css";
 import Video from "./Components/Video";
 import image from "./Components/Form/719.gif";
+import { withServer } from "./Api/context";
 import dotenv from "dotenv";
-// import Swal from "sweetalert2";
 dotenv.config();
-
-// const KEY = process.env.REACT_APP_KEY;
-const DEV_SERVER = process.env.REACT_APP_DEV_SERVER;
-// const GAPI = process.env.REACT_APP_GOOGLE_API;
 
 class Drive extends Component {
   constructor() {
@@ -27,16 +22,13 @@ class Drive extends Component {
   }
 
   fetchingData() {
-    axios
-      .get(`${DEV_SERVER}/link/${this.state.id}`)
-      .then(response => {
-        this.setState({ my_res: response.data, loading: false });
-        console.log("res", response);
-      })
-      .catch(error => {
-        // Swal.fire("", error.response.data, "wrong");
-        this.setState({ loading: false });
-      });
+    const { id } = this.state;
+    this.props.server
+      .getLinkWithId(id)
+      .then(response =>
+        this.setState({ my_res: response.data, loading: false })
+      )
+      .catch(error => this.setState({ loading: false }));
   }
 
   render() {
@@ -52,11 +44,16 @@ class Drive extends Component {
             src={image}
           />
         ) : (
-          <Video video={my_res.g_down} title={my_res.title} />
+          <Video
+            video={my_res.g_down}
+            title={my_res.title}
+            poster={my_res.g_id}
+            // type={my_res.format}
+          />
         )}
       </>
     );
   }
 }
 
-export default Drive;
+export default withServer(Drive);

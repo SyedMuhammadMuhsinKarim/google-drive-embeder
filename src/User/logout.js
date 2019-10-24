@@ -1,11 +1,32 @@
-import React from "react";
-import axios from "axios";
-import ServerApi from "./../Api";
+import React, { Component } from "react";
+import { withServer } from "../Api/context";
+import { Button } from "reactstrap";
+import Swal from "sweetalert2";
 
-const LogOut = () => {
-  ServerApi.logoutUser()
-    .then(() => sessionStorage.removeItem("key"))
-    .catch(err => console.log(err));
-};
+class LogOut extends Component {
+  // constructor() {
+  //   super();
+  //   this.state = {};
+  // }
 
-export default LogOut;
+  action = () => {
+    console.log("running");
+    this.props.server
+      .logoutUser()
+      .then(() => {
+        sessionStorage.removeItem("key");
+        Swal.fire("Logout Successfully", "", "success");
+      })
+      .catch(err => console.error(err.message));
+  };
+
+  render() {
+    return (
+      <Button type="button" onClick={this.action}>
+        Log Out
+      </Button>
+    );
+  }
+}
+
+export default withServer(LogOut);

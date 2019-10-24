@@ -8,6 +8,7 @@ import {
   NavItem,
   NavLink
 } from "reactstrap";
+import Logout from "../../User/logout";
 // import { Link } from "react-router-dom";
 
 const AuthNav = ({ toggle, isOpen }) => (
@@ -17,7 +18,9 @@ const AuthNav = ({ toggle, isOpen }) => (
     <Collapse isOpen={isOpen} navbar>
       <Nav className="ml-auto" navbar>
         <NavItem>
-          <NavLink>Logout</NavLink>
+          <NavLink>
+            <Logout />
+          </NavLink>
         </NavItem>
       </Nav>
     </Collapse>

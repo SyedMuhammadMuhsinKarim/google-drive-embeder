@@ -4,10 +4,10 @@ import Form from "./Components/Form";
 import "./styles.css";
 import Swal from "sweetalert2";
 import dotenv from "dotenv";
+import { withServer } from "./Api/context";
 dotenv.config();
 
 const KEY = process.env.REACT_APP_KEY;
-const DEV_SERVER = process.env.REACT_APP_DEV_SERVER;
 const GAPI = process.env.REACT_APP_GOOGLE_API;
 
 const INITIAL_STATE = {
@@ -61,8 +61,8 @@ class Drive extends Component {
     return hours + " Hr " + minutes + " Min " + seconds + " Sec";
   }
 
-  async fetchingAPI(link) {
-    await axios(`${GAPI}${link}?key=${KEY}`)
+  fetchingAPI(link) {
+    axios(`${GAPI}${link}?key=${KEY}`)
       .then(result => {
         let fileSize = undefined;
         // console.info(result);
@@ -96,8 +96,10 @@ class Drive extends Component {
   }
 
   sendInfo() {
-    axios
-      .post(`${DEV_SERVER}/link`, this.state.post)
+    // axios
+    //   .post(`${DEV_SERVER}/link`, this.state.post)
+    this.props.server
+      .postLink(this.state.post)
       .then(res => {
         this.setState({ host: res.data._id });
       })
@@ -132,4 +134,4 @@ class Drive extends Component {
   }
 }
 
-export default Drive;
+export default withServer(Drive);

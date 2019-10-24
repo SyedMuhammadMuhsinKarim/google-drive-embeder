@@ -1,11 +1,11 @@
 import React from "react";
 
-const serverApiContext = React.createContext(null);
+const ServerApiContext = React.createContext(null);
 
 export const withServer = Component => props => (
-  <serverApiContext.Consumer>
+  <ServerApiContext.Consumer>
     {server => <Component {...props} server={server} />}
-  </serverApiContext.Consumer>
+  </ServerApiContext.Consumer>
 );
 
-export default serverApiContext;
+export default ServerApiContext;

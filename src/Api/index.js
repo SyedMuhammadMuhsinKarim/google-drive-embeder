@@ -5,26 +5,24 @@ dotenv.config();
 const SERVER_API = process.env.REACT_APP_DEV_SERVER;
 
 class AuthApi {
-  constructor() {
-    this.axios = axios;
-  }
+  // constructor(props) {
+  //   this.axios = axios;
+  // }
 
-  registerUser = (username, email, password) =>
-    this.axios.post(`${SERVER_API}/user/`, { username, email, password });
+  registerUser = post => axios.post(`${SERVER_API}/user/`, post);
 
-  loginUser = (email, password) =>
-    this.axios.post(`${SERVER_API}/user/login`, { email, password });
+  loginUser = post => axios.post(`${SERVER_API}/user/login`, post);
 
-  logoutUser = () => this.axios.post(`${SERVER_API}/user/me/logout`);
+  logoutUser = () => axios.post(`${SERVER_API}/user/me/logout`);
 
   logOutUserFromAllDevices = () =>
-    this.axios.post(`${SERVER_API}/user/me/logoutall`);
+    axios.post(`${SERVER_API}/user/me/logoutall`);
 
-  profile = () => this.axios.post(`${SERVER_API}/user/me/`);
+  profile = () => axios.post(`${SERVER_API}/user/me/`);
 
-  getLinkWithId = id => this.axios.get(`${SERVER_API}/link/${id}`);
+  getLinkWithId = id => axios.get(`${SERVER_API}/link/${id}`);
 
-  postLink = post => this.axios.post(`${SERVER_API}/link`, post);
+  postLink = post => axios.post(`${SERVER_API}/link`, post);
 }
 
 export default AuthApi;
