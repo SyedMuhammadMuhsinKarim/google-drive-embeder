@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import { withServer } from "../Api/context";
 import { Button } from "reactstrap";
 import Swal from "sweetalert2";
+import { Redirect } from "react-router";
+import * as ROUTER from "./../constants/routes";
+import { compose } from "recompose";
 
 class LogOut extends Component {
   // constructor() {
@@ -11,13 +14,15 @@ class LogOut extends Component {
 
   action = () => {
     console.log("running");
+    // sessionStorage.removeItem("key");
     this.props.server
       .logoutUser()
       .then(() => {
         sessionStorage.removeItem("key");
         Swal.fire("Logout Successfully", "", "success");
+        return <Redirect to={ROUTER.SIGN_IN} />;
       })
-      .catch(err => console.error(err.message));
+      .catch(err => Swal.fire("Logout Failed", err.message, "error"));
   };
 
   render() {
@@ -29,4 +34,4 @@ class LogOut extends Component {
   }
 }
 
-export default withServer(LogOut);
+export default compose(withServer)(LogOut);

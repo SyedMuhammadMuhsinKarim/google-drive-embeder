@@ -5,6 +5,8 @@ import { compose } from "recompose";
 import { withServer } from "../Api/context";
 // import Swal from "sweetalert2";
 
+import * as ROUTES from "./../constants/routes";
+
 const INITIAL_STATE = {
   email: "",
   username: "",
@@ -21,7 +23,7 @@ class Registeration extends Component {
     const key = localStorage.getItem("key");
     console.log("Key:", key);
     if (key) {
-      this.props.history.push("/");
+      this.props.history.push(ROUTES.LANDING);
     }
   }
 

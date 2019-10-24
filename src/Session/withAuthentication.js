@@ -1,25 +1,32 @@
 import React from "react";
 import { AuthContext } from "./index";
 // import { withRouter } from "react-router-dom";
+import * as ROUTES from "./../constants/routes";
 
 const withAuthentication = Component => {
   class WithAuthentication extends React.Component {
     constructor(props) {
       super(props);
-      this.state = { authUser: sessionStorage.getItem("key") };
+      this.state = { authUserToken: sessionStorage.getItem("key") || null };
     }
 
-    componentDidMount() {}
+    // componentDidMount() {
+    //   this.listner();
+    // }
 
-    componentWillUnmount() {}
+    // componentWillUnmount() {
+    //   this.listner();
+    // }
 
-    listner() {
-      if (this.state.authUser) {
-      }
-    }
+    // listner() {
+    //   const { authUserToken } = this.state;
+    //   if (!authUserToken) {
+    //     this.props.history.push(ROUTES.SIGN_IN);
+    //   }
+    // }
 
     render = () => (
-      <AuthContext.Provider value={this.state.authUser}>
+      <AuthContext.Provider value={this.state.authUserToken}>
         <Component {...this.props} />
       </AuthContext.Provider>
     );

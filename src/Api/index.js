@@ -18,7 +18,7 @@ class AuthApi {
   logOutUserFromAllDevices = () =>
     axios.post(`${SERVER_API}/user/me/logoutall`);
 
-  profile = () => axios.post(`${SERVER_API}/user/me/`);
+  profile = token => axios.post(`${SERVER_API}/user/me/`, token);
 
   getLinkWithId = id => axios.get(`${SERVER_API}/link/${id}`);
 

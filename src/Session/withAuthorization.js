@@ -1,16 +1,16 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import AuthContext from "./context";
+import { compose } from "recompose";
+import * as ROUTES from "./../constants/routes";
 
 const withAuthorization = condition => Component => {
-  class WithAuthorization extends React.Component {
-    componentDidMount() {
-      this.listner();
-    }
-
+  //condition => send by protected route
+  return class WithAuthorization extends React.Component {
     listner() {
       if (!condition(sessionStorage.getItem("key"))) {
-        this.props.history.push("/login");
+        // if user-key is not fount send to login page
+        this.props.history.push(ROUTES.SIGN_IN);
       }
     }
 
@@ -18,17 +18,21 @@ const withAuthorization = condition => Component => {
       this.listener();
     }
 
+    componentDidMount() {
+      this.listner();
+    }
+
     render() {
       return (
+        /* token -(taken by)-> withAuthentication */
         <AuthContext.Consumer>
-          {authUser =>
-            condition(authUser) ? <Component {...this.props} /> : null
+          {authUserToken =>
+            condition(authUserToken) ? <Component {...this.props} /> : null
           }
         </AuthContext.Consumer>
       );
     }
-  }
-  return WithAuthorization;
+  };
 };
 
-export default withRouter(withAuthorization);
+export default compose(withRouter)(withAuthorization);

@@ -9,6 +9,7 @@ import {
   NavLink
 } from "reactstrap";
 import { Link } from "react-router-dom";
+import * as ROUTES from "./../../constants/routes"
 
 const NonAuthNav = ({ toggle, isOpen }) => (
   <Navbar color="dark" dark expand="md">
@@ -17,12 +18,12 @@ const NonAuthNav = ({ toggle, isOpen }) => (
     <Collapse isOpen={isOpen} navbar>
       <Nav className="ml-auto" navbar>
         <NavItem>
-          <Link to="/login">
+          <Link to={ROUTES.SIGN_IN}>
             <NavLink>Log In</NavLink>
           </Link>
         </NavItem>
         <NavItem>
-          <Link to="/register">
+          <Link to={ROUTES.SIGN_UP}>
             <NavLink>Sign Up</NavLink>
           </Link>
         </NavItem>

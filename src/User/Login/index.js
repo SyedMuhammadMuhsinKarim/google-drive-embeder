@@ -4,6 +4,7 @@ import { withServer } from "./../../Api/context";
 import { compose } from "recompose";
 import Swal from "sweetalert2";
 import LoginForm from "./loginForm";
+import { withAuthentication } from "../../Session";
 
 const INITIAL_STATE = {
   email: "",
@@ -16,13 +17,13 @@ class Login extends React.Component {
     this.state = { ...INITIAL_STATE };
   }
 
-  UNSAFE_componentWillMount() {
-    const key = sessionStorage.getItem("key");
-    if (key) {
-      console.log(key);
-      this.props.history.push("/");
-    }
-  }
+  // UNSAFE_componentWillMount() {
+  //   const key = sessionStorage.getItem("key");
+  //   if (key) {
+  //     console.log(key);
+  //     this.props.history.push("/");
+  //   }
+  // }
 
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
