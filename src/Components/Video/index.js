@@ -7,12 +7,14 @@ export default class Video extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      video: props.video
+      res: props.video
     };
   }
 
   componentDidMount() {
     // const options = {};
+
+    // console.log(this.state.video);
 
     const controls = [
       "play-large", // The large play button in the center
@@ -44,10 +46,11 @@ export default class Video extends Component {
   }
 
   render() {
+    const {res} = this.state
     return (
       <React.Fragment>
         <Helmet>
-          <title>{this.props.title ? this.props.title : "Demo"}</title>
+          <title>{res ? res.title : "Demo"}</title>
         </Helmet>
 
         <div className="my-div shadow container">
@@ -58,15 +61,15 @@ export default class Video extends Component {
               controls
               playsinline
               poster={
-                this.props.poster
-                  ? `https://drive.google.com/vt?id=${this.props.poster}`
+                res
+                  ? `https://drive.google.com/vt?id=${res.g_id}`
                   : ""
               }
             >
               <source
                 src={
-                  this.props.video
-                    ? this.props.video
+                  res
+                    ? res.g_down
                     : "http://techslides.com/demos/sample-videos/small.mp4"
                 }
                 type={this.props.type ? this.props.type : "video/mp4"}
