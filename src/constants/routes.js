@@ -1,2 +1,2 @@
 export const LANDING = "/";
-export const EMBED = "/player/:id";
+export const EMBED = "/:id";
