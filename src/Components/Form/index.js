@@ -32,7 +32,7 @@ const Form = ({ onChange, onSubmit, host, link, disabled, error, loading }) => (
         <></>
       )}
       {host && (
-        <Link className="text-center" to={"/" + host}>
+        <Link className="text-center" to={"/player/" + host}>
           Your Link
         </Link>
       )}
