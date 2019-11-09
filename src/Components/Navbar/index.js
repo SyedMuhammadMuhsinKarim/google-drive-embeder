@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import AuthContext from "../../Session/context";
-import AuthNav from "./AuthNav";
-import NonAuthNav from "./NonAuthNav";
+import MyNavbar from "./Nav";
 
 class Navigation extends Component {
   constructor(props) {
@@ -20,17 +18,7 @@ class Navigation extends Component {
   }
 
   render() {
-    return (
-      <AuthContext.Consumer>
-        {authUser =>
-          authUser ? (
-            <AuthNav toggle={this.toggle} isOpen={this.state.isOpen} />
-          ) : (
-            <NonAuthNav toggle={this.toggle} isOpen={this.state.isOpen} />
-          )
-        }
-      </AuthContext.Consumer>
-    );
+    return <MyNavbar />;
   }
 }
 

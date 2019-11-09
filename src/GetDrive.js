@@ -14,7 +14,7 @@ class Drive extends Component {
 
   UNSAFE_componentWillMount() {
     const path = window.location.pathname.split("/");
-    this.setState({ id: path[2] });
+    this.setState({ id: path[1] });
   }
 
   componentDidMount() {
@@ -33,6 +33,7 @@ class Drive extends Component {
 
   render() {
     const { my_res } = this.state;
+    // console.log(my_res);
     return (
       <>
         {this.state.loading === true ? (
@@ -45,9 +46,11 @@ class Drive extends Component {
           />
         ) : (
           <Video
-            video={my_res.g_down}
-            title={my_res.title}
-            poster={my_res.g_id}
+            // video={my_res.g_down}
+            // title={my_res.title}
+            // poster={my_res.g_id}
+
+            video={my_res}
             // type={my_res.format}
           />
         )}
