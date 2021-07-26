@@ -8,7 +8,7 @@ export default function Footer() {
       className="fixed-bottom py-2 bg-white text-dark"
     >
       <div className="text-center">
-        <small>Made with Love</small>
+        <small>Made with Love ❤️ — Toon Network Pakistan</small>
       </div>
     </footer>
   );
