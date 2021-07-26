@@ -7,7 +7,7 @@ const MyNavbar = ({ toggle, isOpen }) => (
   <Navbar color="dark" dark expand="md">
     <NavbarBrand className="mx-auto">
       <Link className=" text-white text-decoration-none" to={ROUTES.LANDING}>
-        Google Drive Embeder
+        Beta Server — Toon Network Pakistan
       </Link>
     </NavbarBrand>
   </Navbar>
