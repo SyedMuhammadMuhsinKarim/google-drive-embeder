@@ -5,9 +5,11 @@ dotenv.config();
 const SERVER_API = process.env.REACT_APP_DEV_SERVER;
 
 class AuthApi {
-  getLinkWithId = id => axios.get(`${SERVER_API}/link/${id}`);
+  getLinkWithId = (id) => axios.get(`${SERVER_API}/link/${id}`);
 
-  postLink = post => axios.post(`${SERVER_API}/link`, post);
+  postLink = (post) => axios.post(`${SERVER_API}/link`, post);
+
+  getAll = () => axios.get(`${SERVER_API}/link/`);
 }
 
 export default AuthApi;

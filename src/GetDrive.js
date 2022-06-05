@@ -25,10 +25,10 @@ class Drive extends Component {
     const { id } = this.state;
     this.props.server
       .getLinkWithId(id)
-      .then(response =>
+      .then((response) =>
         this.setState({ my_res: response.data, loading: false })
       )
-      .catch(error => this.setState({ loading: false }));
+      .catch((error) => this.setState({ loading: false }));
   }
 
   render() {
@@ -45,14 +45,7 @@ class Drive extends Component {
             src={image}
           />
         ) : (
-          <Video
-            // video={my_res.g_down}
-            // title={my_res.title}
-            // poster={my_res.g_id}
-
-            video={my_res}
-            // type={my_res.format}
-          />
+          <Video video={my_res} />
         )}
       </>
     );

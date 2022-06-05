@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import plyr from "plyr";
+import plyr from "plyr/dist/plyr.polyfilled";
 import "./index.css";
 import Helmet from "react-helmet";
 
@@ -19,9 +19,9 @@ export default class Video extends Component {
     const controls = [
       "play-large", // The large play button in the center
       "restart", // Restart playback
-      // "rewind", // Rewind by the seek time (default 10 seconds)
+      "rewind", // Rewind by the seek time (default 10 seconds)
       "play", // Play/pause playback
-      // "fast-forward", // Fast forward by the seek time (default 10 seconds)
+      "fast-forward", // Fast forward by the seek time (default 10 seconds)
       "progress", // The progress bar and scrubber for playback and buffering
       // "current-time", // The current time of playback
       "duration", // The full duration of the media
@@ -35,12 +35,10 @@ export default class Video extends Component {
       "fullscreen" // Toggle fullscreen
     ];
 
-    this.player = plyr.setup("#plyr-player", {
-      controls
-    });
+    this.player = plyr.setup("#plyr-player", { controls });
   }
   componentWillUnmount() {
-    if (this.player.length > 0) {
+    if (this.player && this.player.length > 0) {
       for (const playerEl of this.player) {
         playerEl.destroy();
       }
